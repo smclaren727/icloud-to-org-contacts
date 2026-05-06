@@ -130,8 +130,10 @@ package direction.
 
 ## Emacs
 
-The parent Emacs configuration includes `modules/my-contacts.el`, which
-exposes these commands:
+This repository does not currently ship a MELPA-style Emacs package.
+In the author's Emacs configuration, `modules/my-contacts.el` wraps an
+installed `icloud-to-org-contacts` executable and exposes these
+commands:
 
 ```text
 M-x my-contacts-import-vcf
@@ -139,9 +141,7 @@ M-x my-contacts-sync-carddav
 M-x my-contacts-list-carddav-groups
 ```
 
-That wrapper prefers an installed `icloud-to-org-contacts` executable
-and falls back to the checkout wrapper. Output appears in the
-`*contacts-import*` buffer.
+Output appears in the `*contacts-import*` buffer.
 
 Some Emacs configurations hide Org property drawers by default. If a
 generated note looks empty, reveal drawers with your normal Org folding

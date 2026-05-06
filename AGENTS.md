@@ -1,8 +1,7 @@
 # AGENTS.md - icloud-to-org-contacts
 
 This file gives local instructions for agents working in this
-subproject. The parent Emacs configuration guide still applies, but
-this directory is a standalone Python package with its own boundaries.
+standalone Python package.
 
 ## Project Purpose
 
@@ -25,15 +24,9 @@ back to iCloud.
 
 ## Repository Boundary
 
-This project lives under the larger Emacs config repo at:
-
-```text
-~/.emacs.d/scripts/icloud-to-org-contacts/
-```
-
-Keep most changes inside this directory. Only edit the parent Emacs
-config when the task explicitly involves the wrapper module
-`modules/my-contacts.el` or integration behavior.
+This project lives in its own repository. Keep Emacs configuration
+integration in the user's Emacs config unless the task explicitly asks
+to add or maintain an Emacs package in this repo.
 
 `CLAUDE.md` in this directory is intentionally only:
 
@@ -131,7 +124,7 @@ icloud-to-org-contacts sync-carddav --full-refresh
 icloud-to-org-contacts list-groups
 ```
 
-The parent Emacs wrapper exposes interactive commands by `M-x`:
+The user's Emacs configuration may expose wrapper commands by `M-x`:
 
 ```text
 my-contacts-import-vcf

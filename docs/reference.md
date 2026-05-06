@@ -130,18 +130,17 @@ limitation by using server-side identity.
 ## Architecture
 
 ```text
-scripts/icloud-to-org-contacts/
-  pyproject.toml
-  vcf-to-org-contacts.py
-  src/icloud_to_org_contacts/
-    authinfo.py
-    carddav.py
-    cli.py
-    lifecycle.py
-    manifest.py
-    orgnote.py
-    vcard.py
-  tests/
+pyproject.toml
+vcf-to-org-contacts.py
+src/icloud_to_org_contacts/
+  authinfo.py
+  carddav.py
+  cli.py
+  lifecycle.py
+  manifest.py
+  orgnote.py
+  vcard.py
+tests/
 ```
 
 Module responsibilities:
