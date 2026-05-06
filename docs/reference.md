@@ -65,6 +65,11 @@ The full vCard `NOTE` is written into the body only when a note has no
 body yet. After that, upstream note changes update the `:NOTE:` property
 summary, leaving user-owned body text alone.
 
+Generated notes from older versions that used a root-level property
+drawer are migrated to the headline-drawer layout on the next rewrite.
+The migration preserves the existing `:ID:`, user-added drawer keys,
+filetags, and body text.
+
 ## Manifest
 
 State lives at `<output_dir>/.import-state.json`:

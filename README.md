@@ -145,9 +145,9 @@ M-x my-contacts-list-carddav-groups
 
 Output appears in the `*contacts-import*` buffer.
 
-Some Emacs configurations hide Org property drawers by default. If a
-generated note looks empty, reveal drawers with your normal Org folding
-commands or with the helper from this Emacs config:
+Some Emacs configurations hide Org property drawers by default. If the
+contact fields appear missing, reveal drawers with your normal Org
+folding commands or with the helper from this Emacs config:
 
 ```text
 M-x my-org-show-property-drawers
