@@ -105,6 +105,10 @@ history.
 A generated contact note looks like this:
 
 ```org
+#+title: Alice Smith
+#+filetags: :contact:
+
+* Alice Smith
 :PROPERTIES:
 :ID: 4c6f4ea6-df6c-4d27-bdcf-7f3126c4a7c5
 :VCARD_UID: contact-upstream-id
@@ -113,8 +117,6 @@ A generated contact note looks like this:
 :PHONE_CELL: +15550001
 :COMPANY: Acme Corp
 :END:
-#+title: Alice Smith
-#+filetags: :contact:
 ```
 
 The importer stores sync state in `.import-state.json` in the output

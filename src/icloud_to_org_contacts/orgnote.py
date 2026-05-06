@@ -2,7 +2,7 @@
 
 Pure functions over the dicts produced by vcard.parse_vcards plus
 small filesystem helpers (find/extract). Owns the on-disk note shape:
-property drawer, title, filetags, body preservation.
+title, filetags, contact headline drawer, body preservation.
 
 The drawer is built as a list of (key, value) pairs so the CLI can
 do a 3-way merge against an existing file's drawer: keys we never
@@ -57,9 +57,10 @@ def find_existing_note(output_dir, vcard_uid):
 def extract_body(filepath):
     """Extract user-written body text (everything after the header block).
 
-    Header = property drawer + any number of `#+keyword:` lines. Body
-    is everything after that, minus a single optional separator blank
-    line. Returns "" if the file has no body content.
+    Supports both the current headline-drawer layout and the old
+    root-drawer layout. Body is everything after the first drawer,
+    minus keyword lines from the legacy layout and one optional
+    separator blank line. Returns "" if the file has no body content.
     """
     with open(filepath, "r", encoding="utf-8") as f:
         lines = f.readlines()
@@ -74,6 +75,8 @@ def extract_body(filepath):
         return body if body.strip() else ""
 
     i = end_idx + 1
+    while i < len(lines) and lines[i].strip() == "":
+        i += 1
     while i < len(lines) and lines[i].lstrip().startswith("#+"):
         i += 1
     if i < len(lines) and lines[i].strip() == "":
@@ -318,12 +321,12 @@ def format_org_note(drawer_pairs, fn, *, body="", vcard_note="", filetags=None):
     tags = ["contact"] + normalize_filetags(filetags)
     filetag_line = ":" + ":".join(tags) + ":"
 
-    lines = [":PROPERTIES:"]
+    lines = [f"#+title: {fn}", f"#+filetags: {filetag_line}", ""]
+    lines.append(f"* {fn}")
+    lines.append(":PROPERTIES:")
     for key, value in drawer_pairs:
         lines.append(f":{key}: {_property_value(value)}".rstrip())
     lines.append(":END:")
-    lines.append(f"#+title: {fn}")
-    lines.append(f"#+filetags: {filetag_line}")
     lines.append("")
 
     if vcard_note and not body:

@@ -40,7 +40,13 @@ def test_vcf_import_emits_org_property_drawer(tmp_path):
 
     assert "Done: 1 created" in result.stdout
     note = (output_dir / "alice-smith.org").read_text(encoding="utf-8")
-    assert note.startswith(":PROPERTIES:\n")
+    assert note.startswith(
+        "#+title: Alice Smith\n"
+        "#+filetags: :contact:\n"
+        "\n"
+        "* Alice Smith\n"
+        ":PROPERTIES:\n"
+    )
     assert_org_id_property(note)
     assert ":VCARD_UID: person-1\n" in note
     assert ":NICKNAME: Al\n" in note
@@ -96,6 +102,54 @@ def test_reimport_preserves_user_drawer_keys_and_body(tmp_path):
     note = note_path.read_text(encoding="utf-8")
     assert ":EMAIL_WORK: robert@example.com\n" in note
     assert ":EMAIL_WORK: bob@example.com\n" not in note
+    assert ":USER_KEY: keep me\n" in note
+    assert note.endswith("User-owned body.\n")
+
+
+def test_reimport_migrates_legacy_root_drawer_to_headline_drawer(tmp_path):
+    vcf = tmp_path / "contacts.vcf"
+    output_dir = tmp_path / "out"
+    output_dir.mkdir()
+    note_path = output_dir / "legacy-person.org"
+    note_path.write_text(
+        "\n".join([
+            ":PROPERTIES:",
+            ":ID: 11111111-1111-1111-1111-111111111111",
+            ":VCARD_UID: legacy-1",
+            ":EMAIL_HOME: old@example.com",
+            ":USER_KEY: keep me",
+            ":END:",
+            "#+title: Legacy Person",
+            "#+filetags: :contact:hand-added:",
+            "",
+            "User-owned body.",
+            "",
+        ]),
+        encoding="utf-8",
+    )
+    write_vcf(
+        vcf,
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        "UID:legacy-1",
+        "FN:Legacy Person",
+        "EMAIL;TYPE=HOME:new@example.com",
+        "END:VCARD",
+    )
+
+    run_cli(vcf, "-o", output_dir)
+
+    note = note_path.read_text(encoding="utf-8")
+    assert note.startswith(
+        "#+title: Legacy Person\n"
+        "#+filetags: :contact:hand-added:\n"
+        "\n"
+        "* Legacy Person\n"
+        ":PROPERTIES:\n"
+    )
+    assert ":ID: 11111111-1111-1111-1111-111111111111\n" in note
+    assert ":EMAIL_HOME: new@example.com\n" in note
+    assert ":EMAIL_HOME: old@example.com\n" not in note
     assert ":USER_KEY: keep me\n" in note
     assert note.endswith("User-owned body.\n")
 

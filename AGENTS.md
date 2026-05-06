@@ -64,10 +64,14 @@ Key ownership rules:
 
 ## Output Contract
 
-Generated contact files must remain valid Org files with a top-level
-property drawer:
+Generated contact files must remain valid Org files with file keywords,
+a top-level contact headline, and a property drawer on that headline:
 
 ```org
+#+title: Contact Name
+#+filetags: :contact:
+
+* Contact Name
 :PROPERTIES:
 :ID: <org-id-uuid>
 :VCARD_UID: <upstream uid>
@@ -75,8 +79,6 @@ property drawer:
 :EMAIL_WORK: person@example.com
 :PHONE_CELL: +15550001
 :END:
-#+title: Contact Name
-#+filetags: :contact:
 ```
 
 Important invariants:

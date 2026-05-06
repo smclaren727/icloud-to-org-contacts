@@ -6,9 +6,14 @@ advanced users without making the README too heavy.
 ## Output Contract
 
 Each contact is written to one `.org` file named from the sanitized full
-name. The first block is a top-level Org property drawer:
+name. The file starts with Org keywords, followed by one top-level
+contact headline with an Org property drawer:
 
 ```org
+#+title: Alice Smith
+#+filetags: :contact:family:work:
+
+* Alice Smith
 :PROPERTIES:
 :ID: <org-id-uuid>
 :VCARD_UID: <real-or-synth-uid>
@@ -29,8 +34,6 @@ name. The first block is a top-level Org property drawer:
 :DATE_ANNIVERSARY: 2010-06-15
 :NOTE: One-line flattened summary of the vCard NOTE
 :END:
-#+title: Alice Smith
-#+filetags: :contact:family:work:
 
 body text is user-owned after first import
 ```
