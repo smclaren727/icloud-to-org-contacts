@@ -41,6 +41,8 @@ Do not add more content to `CLAUDE.md`; update this file instead.
 ```text
 pyproject.toml
 vcf-to-org-contacts.py          compatibility wrapper
+lisp/
+  icloud-to-org-contacts.el     Emacs wrapper around the CLI
 src/icloud_to_org_contacts/
   authinfo.py                   authinfo/.authinfo.gpg credential loading
   carddav.py                    read-only CardDAV client
@@ -61,6 +63,8 @@ Key ownership rules:
 - `carddav.py` should stay read-only and avoid mutating remote data.
 - `cli.py` coordinates parsing, filtering, writes, archives, and
   manifest updates.
+- `lisp/icloud-to-org-contacts.el` exposes interactive Emacs commands
+  that shell out to the installed CLI.
 
 ## Output Contract
 
@@ -126,16 +130,15 @@ icloud-to-org-contacts sync-carddav --full-refresh
 icloud-to-org-contacts list-groups
 ```
 
-The user's Emacs configuration may expose wrapper commands by `M-x`:
+The Emacs wrapper exposes interactive commands by `M-x`:
 
 ```text
-my-contacts-import-vcf
-my-contacts-sync-carddav
-my-contacts-list-carddav-groups
+icloud-to-org-contacts-import-vcf
+icloud-to-org-contacts-sync-carddav
+icloud-to-org-contacts-list-groups
 ```
 
-These commands intentionally do not have leader bindings unless a
-future task explicitly asks for them.
+These commands intentionally do not define global keybindings.
 
 ## Coding Guidelines
 
@@ -147,6 +150,8 @@ future task explicitly asks for them.
 - Use standard parsers (`vobject`, XML parsing helpers) instead of ad
   hoc string parsing when practical.
 - Keep generated fixtures synthetic and minimal.
+- For the Emacs wrapper, use the `icloud-to-org-contacts-` prefix for
+  public symbols and avoid personal config names such as `my-contacts`.
 
 ## Validation Before Handoff
 
@@ -155,6 +160,13 @@ For code changes, run:
 ```sh
 python3 -m pytest
 git diff --check
+```
+
+For Emacs Lisp wrapper changes, also run:
+
+```sh
+emacs --batch --quick -L lisp --eval '(require (quote icloud-to-org-contacts))'
+emacs --batch --quick -f batch-byte-compile lisp/icloud-to-org-contacts.el
 ```
 
 For docs-only changes, `git diff --check` is usually enough.

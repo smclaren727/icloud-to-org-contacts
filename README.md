@@ -132,18 +132,26 @@ package direction.
 
 ## Emacs
 
-This repository does not currently ship a MELPA-style Emacs package.
-In the author's Emacs configuration, `modules/my-contacts.el` wraps an
-installed `icloud-to-org-contacts` executable and exposes these
-commands:
+This repository includes a small Emacs Lisp wrapper in
+`lisp/icloud-to-org-contacts.el`. Install the CLI first, then add the
+wrapper to your Emacs config:
 
-```text
-M-x my-contacts-import-vcf
-M-x my-contacts-sync-carddav
-M-x my-contacts-list-carddav-groups
+```elisp
+(add-to-list 'load-path "/path/to/icloud-to-org-contacts/lisp")
+(require 'icloud-to-org-contacts)
+
+(setq icloud-to-org-contacts-output-directory "~/notes/Contacts")
 ```
 
-Output appears in the `*contacts-import*` buffer.
+The wrapper exposes these commands:
+
+```text
+M-x icloud-to-org-contacts-import-vcf
+M-x icloud-to-org-contacts-sync-carddav
+M-x icloud-to-org-contacts-list-groups
+```
+
+Output appears in the `*icloud-to-org-contacts*` buffer.
 
 ## Limits
 

@@ -9,10 +9,10 @@ The working implementation is a standalone Python CLI. That remains the
 best short-term production path because it already handles CardDAV
 syncing, vCard parsing, Org output, manifests, archiving, and tests.
 
-For Emacs users, the next practical step is a thin Emacs Lisp wrapper
-package. That wrapper can expose `M-x` commands, defcustoms, async
-process buffers, and executable checks while continuing to call the
-standalone CLI.
+For Emacs users, the repo includes a thin Emacs Lisp wrapper in
+`lisp/icloud-to-org-contacts.el`. The wrapper exposes `M-x` commands,
+defcustoms, async process buffers, and executable checks while
+continuing to call the standalone CLI.
 
 ## Emacs Lisp Package Feasibility
 
@@ -34,7 +34,7 @@ CardDAV XML responses.
 ## Recommended Path
 
 1. Keep the Python CLI as the supported engine.
-2. Add a small Emacs Lisp wrapper package for Emacs integration.
+2. Maintain the Emacs Lisp wrapper as the supported Emacs integration.
 3. Build full Elisp parsing and CardDAV support only if the wrapper plus
    CLI install step proves too awkward for users.
 4. If a pure Elisp rewrite begins, port behavior behind the existing

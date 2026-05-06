@@ -135,6 +135,8 @@ limitation by using server-side identity.
 ```text
 pyproject.toml
 vcf-to-org-contacts.py
+lisp/
+  icloud-to-org-contacts.el
 src/icloud_to_org_contacts/
   authinfo.py
   carddav.py
@@ -155,6 +157,8 @@ Module responsibilities:
 - `manifest.py` owns `.import-state.json` and output schema hashing.
 - `orgnote.py` owns the Org note format and drawer/filetag merges.
 - `vcard.py` parses and normalizes vCard data.
+- `lisp/icloud-to-org-contacts.el` exposes Emacs commands that call the
+  installed CLI asynchronously.
 
 The importer writes only under the configured output directory:
 
