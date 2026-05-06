@@ -125,6 +125,9 @@ See [docs/reference.md](docs/reference.md) for the full output contract,
 manifest details, archive behavior, Apple Contacts quirks, and project
 architecture.
 
+See [docs/roadmap.md](docs/roadmap.md) for the longer-term Emacs Lisp
+package direction.
+
 ## Emacs
 
 The parent Emacs configuration includes `modules/my-contacts.el`, which
